@@ -33,4 +33,28 @@ class API():
             return []
             #return a not valid code
         
+    def scenic_spot(self,cty):
+        #this interface is used to get scenic spot
+        #usage is the same as the previous function
+        api_url = 'http://apis.juhe.cn/fapigx/scenic/query'
+        params_dict = {
+            "city":cty, #city name
+            "key": "7c89e50cc8677385906b660acc674c2e",#API interface request key
+            "word":"none", #required input
+            "num":10,#the number of the spots
+        }
+        params = urllib.parse.urlencode(params_dict)
+        req = request.Request(api_url, params.encode())
+        response = request.urlopen(req)
+        content = response.read()
+        if content:
+                result = json.loads(content)
+                error_code = result['error_code']
+                if (error_code == 0):
+                    return result['result']
+                else:
+                    return []
+        else:
+                return []
+        
     
