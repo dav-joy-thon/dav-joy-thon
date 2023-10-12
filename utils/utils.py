@@ -57,4 +57,31 @@ class API():
         else:
                 return []
         
-    
+    def weather(self,cty):
+        #this interface is used to get weather
+        #usage is the same as the previous function
+        api_url = 'http://apis.juhe.cn/simpleWeather/query'
+        params_dict = {
+            "city": cty,  
+            "key": "f3ad7e5805ab82e60a1a688223cb6473", 
+        }
+        params = urllib.parse.urlencode(params_dict)
+        req = request.Request(api_url, params.encode())
+        response = request.urlopen(req)
+        content = response.read()
+        if content:
+            result = json.loads(content)
+            error_code = result['error_code']
+            if (error_code == 0):
+                #to get the temperature and else in the list
+                temperature = result['result']['realtime']['temperature']
+                humidity = result['result']['realtime']['humidity']
+                info = result['result']['realtime']['info']
+                direct = result['result']['realtime']['direct']
+                power = result['result']['realtime']['power'] 
+                aqi = result['result']['realtime']['aqi']
+                return temperature,humidity,info,direct,power,aqi
+            else:
+                return 999,999,999,999,999,999 #return a not valid code
+        else:
+            return 999,999,999,999,999,999 #return a not valid code
