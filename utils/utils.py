@@ -41,7 +41,7 @@ class API():
             "city":cty, #city name
             "key": "7c89e50cc8677385906b660acc674c2e",#API interface request key
             "word":"none", #required input
-            "num":10,#the number of the spots
+            "num":15,#the number of the spots
         }
         params = urllib.parse.urlencode(params_dict)
         req = request.Request(api_url, params.encode())
